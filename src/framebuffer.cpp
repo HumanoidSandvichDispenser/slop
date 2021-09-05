@@ -85,7 +85,7 @@ void slop::Framebuffer::unbind() {
     glBindFramebuffer( GL_FRAMEBUFFER, 0 );
 }
 
-void slop::Framebuffer::draw(glm::vec2 mouse, float time, glm::vec4 color){
+void slop::Framebuffer::draw(glm::vec2 mouse, glm::vec4 selection, float time, glm::vec4 color){
     shader->bind();
     shader->setParameter( "texture", 0 );
     shader->setAttribute( "position", buffers[0], 2 );
@@ -98,6 +98,9 @@ void slop::Framebuffer::draw(glm::vec2 mouse, float time, glm::vec4 color){
     }
     if ( shader->hasParameter( "screenSize" ) ) {
         shader->setParameter( "screenSize", glm::vec2( WidthOfScreen( x11->screen ), HeightOfScreen( x11->screen ) ));
+    }
+    if ( shader->hasParameter( "selection" ) ) {
+        shader->setParameter( "selection", selection );
     }
     if ( shader->hasParameter( "time" ) ) {
         shader->setParameter( "time", time );
